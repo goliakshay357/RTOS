@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   {
     error("ERROR opening socket");
   }
-  printf("[+] Socket connected succesfully \n");
+  printf("[+] Socket connected succesfully 🚀 \n");
 
   bzero((char *)&serv_addr, sizeof(serv_addr));
   // Getting the port number from CMD
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   }
   printf("[+] Binding step succesfully \n");
 
-  listen(sockfd, 5);
+  listen(sockfd, 1);
   printf("[+]Now Listening \n");
 
   clilen = sizeof(cli_addr);
@@ -66,15 +66,20 @@ int main(int argc, char *argv[])
     error("ERROR reading from socket");
   }
 
-  printf("Here is the message: %s \n", buffer);
+  printf("Client Message: %s \n", buffer);
 
+  // Taking server input
+  printf("Enter Message:");
+  bzero(buffer, 256);
+  fgets(buffer, 255, stdin);
+  n = write(newsockfd, buffer,255);
   //Sending message to client
-  n = write(newsockfd, "Server sending confirmation", 27);
+  // n = write(newsockfd, "Server sending confirmation", 27);
   if (n < 0)
   {
     error("ERROR writing to socket");
   }
-
+  printf("Message sent Successfully to client🎉\n");
 
 
   return 0;

@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   {
     error("ERROR opening socket");
   }
-  printf("[+] Socket connected succesfully \n");
+  printf("[+] Socket connected succesfully 🚀\n");
 
   // Taking the IP ADDR
   server = gethostbyname(argv[1]);
@@ -60,14 +60,14 @@ int main(int argc, char *argv[])
   if(n<0){
     error("Error writing to socket");
   }
-  printf("[+]Message sent Succesfully from client \n", buffer);
+  printf("[+]Message sent Succesfully to Server🎉\n", buffer);
 
   bzero(buffer,256);
   n = read(sockfd, buffer, 255);
   if(n<0){
     error("ERROR reading from socket");
   }
-  printf("%s \n",buffer);
+  printf("Server Message: %s \n",buffer);
 
   return 0;
 }
