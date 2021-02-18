@@ -118,6 +118,7 @@ static int uid = 10;
 
 // Handling client Messages
 void* handle_client(void* arg){
+  printf("Someone entered!");
   char buffer [BUFFER_SZ];
   char name[NAME_LEN];
 
@@ -180,7 +181,7 @@ void* handle_client(void* arg){
 
       // Private Message
       else if(strcmp(recv_structure.ReceiverName, "all")){
-        printf("Entering the Private message mode");
+        
       }
 
       // // Send the message received from this client to all other clients
