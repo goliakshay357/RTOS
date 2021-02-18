@@ -106,6 +106,27 @@ void send_message(char *s, int uid){
 	pthread_mutex_unlock(&clients_mutex);
 }
 
+// Sending Message to that specific person
+void sendPrivateMessage(char* s, char* name){
+  pthread_mutex_lock(&clients_mutex);
+
+  printf("Message Sending \n");
+  	for(int i=0; i<MAX_CLIENTS; ++i){
+		if(clients[i]){
+			if(!strcmp(clients[i]->name, name) ){
+				if(write(clients[i]->sockfd, s, strlen(s)) < 0){
+					perror("ERROR: write to descriptor failed");
+					break;
+				}
+			}
+		}
+	}
+    printf("Message Sent \n");
+
+  pthread_mutex_unlock(&clients_mutex);
+}
+
+
 
 
 
@@ -118,7 +139,7 @@ static int uid = 10;
 
 // Handling client Messages
 void* handle_client(void* arg){
-  printf("Someone entered!");
+  printf("Someone entered! \n");
   char buffer [BUFFER_SZ];
   char name[NAME_LEN];
 
@@ -180,8 +201,12 @@ void* handle_client(void* arg){
       }
 
       // Private Message
-      else if(strcmp(recv_structure.ReceiverName, "all")){
-        
+      // else if(strcmp(recv_structure.ReceiverName, "all")){
+      //   printf("Private Message: %s", recv_structure.senderName);
+      // }
+      else{
+        printf("Private Message: %s -> %s \n",recv_structure.ReceiverName, recv_structure.senderName);
+        sendPrivateMessage(recv_structure.message, recv_structure.ReceiverName);
       }
 
       // // Send the message received from this client to all other clients
